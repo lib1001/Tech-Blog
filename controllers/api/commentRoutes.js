@@ -2,27 +2,36 @@ const router = require('express').Router();
 const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/', (req,res) => {
-    Comment.findAll({})
-    .then(commentData => res.json(commentData))
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err)
-    });
+router.get('/', async (req, res) => {
+  try {
+    const commentData = await Comment.findAll({});
+    if (!commentData.length) {
+      res
+        .status(404)
+        .json({ message: 'No comments...yet' });
+    }
+    res.status(200).json(commentData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.get('/:id', (req, res) => {
-    Comment.findAll({
+
+router.get('/:id', async (req, res) => {
+  try {
+    const commentData = await Comment.findAll({
             where: {
                 id: req.params.id
             }
-        })
-        .then(commentData => res.json(commentData))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        })
-});
+        });
+        if (!commentData.length) {
+          res.status(404).json({ message: 'No comment found with that id!'})
+        }
+        res.status(200).json(commentData);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    });
 
 router.post('/', async (req, res) => {
   try {
@@ -45,7 +54,7 @@ router.delete('/:id', withAuth, async (req, res) => {
       },
     });
     if (!commentData) {
-      res.status(404).json({ message: '404 Blog ID not found' });
+      res.status(404).json({ message: 'No post found with that id!' });
       return;
     }
     res.status(200).json(commentData);
