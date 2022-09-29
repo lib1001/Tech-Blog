@@ -3,7 +3,9 @@ const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.get('/', (req,res) => {
-    Comment.findAll({})
+    Comment.findAll({
+
+    })
     .then(commentData => res.json(commentData))
     .catch(err => {
         console.log(err);
@@ -45,7 +47,7 @@ router.delete('/:id', withAuth, async (req, res) => {
       },
     });
     if (!commentData) {
-      res.status(404).json({ message: '404 Blog ID not found' });
+      res.status(404).json({ message: 'No post found with this id!' });
       return;
     }
     res.status(200).json(commentData);
