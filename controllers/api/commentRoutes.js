@@ -1,14 +1,12 @@
-const router = require('express').Router();
-const { Comment } = require('../../models');
-const withAuth = require('../../utils/auth');
+const router = require("express").Router();
+const { Comment } = require("../../models");
+const withAuth = require("../../utils/auth");
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const commentData = await Comment.findAll({});
     if (!commentData.length) {
-      res
-        .status(404)
-        .json({ message: 'No comments...yet' });
+      res.status(404).json({ message: "No comments...yet" });
     }
     res.status(200).json(commentData);
   } catch (err) {
@@ -16,24 +14,23 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const commentData = await Comment.findAll({
-            where: {
-                id: req.params.id
-            }
-        });
-        if (!commentData.length) {
-          res.status(404).json({ message: 'No comment found with that id!'})
-        }
-        res.status(200).json(commentData);
-      } catch (err) {
-        res.status(500).json(err);
-      }
+      where: {
+        id: req.params.id,
+      },
     });
+    if (!commentData.length) {
+      res.status(404).json({ message: "No comment found with that id!" });
+    }
+    res.status(200).json(commentData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newComment = await Comment.create({
       ...req.body,
@@ -45,7 +42,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     const commentData = await Comment.destroy({
       where: {
@@ -54,7 +51,7 @@ router.delete('/:id', withAuth, async (req, res) => {
       },
     });
     if (!commentData) {
-      res.status(404).json({ message: 'No post found with that id!' });
+      res.status(404).json({ message: "No post found with that id!" });
       return;
     }
     res.status(200).json(commentData);
