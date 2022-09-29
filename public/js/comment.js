@@ -1,13 +1,12 @@
 const commentFormHandler = async (event) => {
     event.preventDefault();
 
-    const id = event.target.getAttribute('data-id');
-    const description = document.querySelector('#comment').value.trim();
+    const comment_content = document.querySelector('#comment').value.trim();
 
-    if (description) {
-        const response = await fetch(`/api/posts/${id}`, {
+    if (comment_content) {
+        const response = await fetch(`/api/comment`, {
             method: 'POST',
-            body: JSON.stringify({ description }),
+            body: JSON.stringify({ comment_content }),
             headers:{
                 'Content-Type': 'application/json',
             },
@@ -22,5 +21,5 @@ const commentFormHandler = async (event) => {
 };
 
 document
-    .querySelector('#comment-form')
+    .querySelector('.comment-form')
     .addEventListener('submit', commentFormHandler);
