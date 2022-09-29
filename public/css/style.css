@@ -1,29 +1,4 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
   }
 
-header {
-  background-color: lightskyblue;
-}
-
-body {
-  background-color:lightgray;
-}
-
-#post-title {
-  font-size: 20px;
-}
-
-#post-title a {
-  color: white;
-}
-
-#username-date {
-  text-align: right;
-}
-
-#user-login {
-  font-size: 20px;
-}
