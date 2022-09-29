@@ -22,11 +22,11 @@ router.get('/:id', async (req, res) => {
       include: [
         {
           model: Post,
-          attributes: ['id', 'title', 'content', 'date_created'],
+          attributes: ['id', 'title', 'content'],
         },
         {
           model: Comment,
-          attributes: ['id', 'comment_content', 'date_created'],
+          attributes: ['id', 'comment_content'],
           include: {
             model: Post,
             attributes: ['title'],
@@ -46,6 +46,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;

@@ -1,6 +1,7 @@
 [
     {
         "title": "A Great Day for Coders",
-         "contents": "Rutgers Coding Bootcamp students continue to succeed. Everyone should start getting excited!"
+         "contents": "Rutgers Coding Bootcamp students continue to succeed. Everyone should start getting excited!",
+         "user_id": 1
     }
 ]

@@ -43,37 +43,37 @@ const deleteButtonHandler = async (event) => {
 };
 
 const updateFormHandler = async (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    const id = event.target.getAttribute('data-id');
-    const title = document.querySelector('#update-post-title').value.trim();
-    const contents = document.querySelector('#update-post-content').value.trim();
+  const id = event.target.getAttribute("data-id");
+  const title = document.querySelector("#update-post-title").value.trim();
+  const contents = document.querySelector("#update-post-content").value.trim();
 
-    if (title && contents) {
-        const response = await fetch(`/api/posts/${id}`, {
-            method: 'PUT',
-            body: JSON.stringify({ title, contents }),
-            headers:{
-                'Content-Type': 'application/json',
-            },
-        });
+  if (title && contents) {
+    const response = await fetch(`/api/posts/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ title, contents }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-        if (response.ok) {
-            document.location.replace('/dashboard');
-        } else {
-            alert('Failed to update post');
-        }
-     }
+    if (response.ok) {
+      document.location.replace("/dashboard");
+    } else {
+      alert("Failed to update post");
+    }
+  }
 };
 
 document
   .querySelector(".new-post-form")
   .addEventListener("submit", newFormHandler);
 
-document 
-    .querySelector('#delete-btn')
-    .addEventListener('click', deleteButtonHandler);
+document
+  .querySelector("#delete-btn")
+  .addEventListener("click", deleteButtonHandler);
 
-  document
-    .querySelector('#update-post')
-    .addEventListener('submit', updateFormHandler);
+document
+  .querySelector("#update-post")
+  .addEventListener("submit", updateFormHandler);
