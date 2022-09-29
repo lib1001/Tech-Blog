@@ -1,10 +1,51 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post, Comment } = require('../../models');
+
+router.get('/', async (req, res) => {
+	try {
+		const userData = await User.findAll(
+      {
+				attributes: { exclude: ['password'] },
+			}
+		);
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const userData = await User.findOne({
+      attributes: { exclude: ['password'] },
+      where: { id: req.params.id },
+      include: [
+        {
+          model: Post,
+          attributes: ['id', 'title', 'content', 'date_created'],
+        },
+        {
+          model: Comment,
+          attributes: ['id', 'comment_content', 'date_created'],
+          include: {
+            model: Post,
+            attributes: ['title'],
+          },
+        },
+      ],
+    });
+    
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+})
+
+
 
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
-
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;

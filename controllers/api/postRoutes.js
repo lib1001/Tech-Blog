@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
-})
+});
 
 
 router.post('/', withAuth, async (req, res) => {
